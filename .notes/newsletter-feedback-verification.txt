@@ -1,0 +1,16 @@
+Newsletter Feedback/Comments Verification:
+
+The Rating & Comments section is now visible at the bottom of the newsletter edition page (/edition/apr-2026).
+
+Visible elements:
+- "Rate this content" heading with 5.0 (2 ratings) already shown
+- Star rating input with name field
+- "Submit Rating" button
+- "Comments (1)" heading with existing comment from "23433" dated 4/16/2026 saying "Great..."
+- Name input field for new comments
+- Textarea for writing comments
+- "Post Comment" button
+
+The section appears between the References section and the Site Footer, matching the placement on other activity pages (Videos, Articles, Posters).
+
+The backend already supports this since contentType is a free-form varchar field - no backend changes needed.

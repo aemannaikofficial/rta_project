@@ -1,0 +1,31 @@
+The Arabic bullet points in the database are correctly formatted as markdown:
+- **من حالات الاستخدام إلى التكامل التشغيلي الكامل:** text
+- **من رؤية البيانات إلى ذكاء القرار الآني:** text
+- **من نشر التقنية إلى حوكمة الذكاء الاصطناعي المؤسسية:** text
+
+However, in the browser screenshot, the rendered Arabic version shows:
+"From Use Cases to Full Operational Integration:" in English mixed with Arabic text.
+
+This means the Streamdown component is rendering the markdown correctly (bold + list),
+but the CONTENT in the database has the English headings mixed in with Arabic text.
+
+Wait - looking more carefully at the screenshot, it shows:
+"من حالات الاستخدام إلى From Use Cases to Full Operational Integration: توسيع..."
+
+This is WRONG. The Arabic content should NOT have English text mixed in.
+Let me re-check the actual database content more carefully.
+
+Actually, looking at the DB output above, the Arabic content is correct:
+"من حالات الاستخدام إلى التكامل التشغيلي الكامل:"
+
+The screenshot might be showing a cached version or I'm misreading the RTL rendering.
+The bold markers (**) around Arabic text in RTL can sometimes look odd.
+
+Actually re-reading the screenshot text: it says "From Use Cases to Full Operational Integration"
+This is clearly English text appearing in the Arabic version. This must be a rendering artifact
+or the page is showing English content.
+
+Wait - let me look again at the screenshot. The page IS in Arabic (RTL layout, Arabic nav).
+But the bullet text shows English. This is very strange given the DB content is correct Arabic.
+
+Let me check if there's a caching issue or if the page is somehow mixing content.

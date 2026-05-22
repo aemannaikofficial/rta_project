@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1776163532908,
+      "tag": "0000_sweet_cargill",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1776510622035,
+      "tag": "0001_petite_shinko_yamashiro",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1779352856511,
+      "tag": "0002_spotty_madame_web",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1779379011496,
+      "tag": "0003_oval_gressill",
+      "breakpoints": true
+    }
+  ]
+}
