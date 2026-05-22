@@ -72,8 +72,8 @@ async function startServer() {
       const { sql } = await import("drizzle-orm");
       const db = await getDb();
       if (db) {
-        await db.execute(sql`UPDATE videos SET duration = '1:50' WHERE videoUrl LIKE '%quantum-city%'`);
-        await db.execute(sql`UPDATE videos SET duration = '2:17' WHERE videoUrl LIKE '%rta-video-2%'`);
+        await db.execute(sql`UPDATE videos SET duration = '1:50', videoUrl = '/assets/videos/Quantum-City-V2 Ffc07ff5.mp4' WHERE videoUrl LIKE '%quantum-city%'`);
+        await db.execute(sql`UPDATE videos SET duration = '2:17', videoUrl = '/assets/videos/Rta-Video-2-Smart-City-Indicators D6200346.mp4' WHERE videoUrl LIKE '%rta-video-2%'`);
       }
     } catch(e) { console.error("Duration patch failed:", e) }
   };
