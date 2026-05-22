@@ -271,6 +271,28 @@ Effective measurement is the foundation of successful smart city transformation.
   }
   console.log(`✓ ${videosData.length} videos inserted`);
 
+  // ─── Newsletters (Editions) ───
+  const newslettersData = [
+    {
+      titleEn: 'AI Newsletter',
+      titleAr: 'نشرة الذكاء الاصطناعي',
+      contentEn: 'Artificial Intelligence is no longer merely an experimental technology; it has rapidly evolved into a foundational pillar of enterprise transformation and operational excellence. For the Roads and Transport Authority (RTA), embracing AI is not just about adopting new tools — it is about redefining the core infrastructure of modern mobility. As we navigate this transition, this edition of our newsletter explores the global landscape of AI, its profound impact on business productivity, the critical importance of robust governance, and real-world applications across various transport sectors.',
+      contentAr: 'لم يعد الذكاء الاصطناعي مجرد تقنية تجريبية؛ بل تطور بسرعة ليصبح ركيزة أساسية للتحول المؤسسي والتميز التشغيلي. بالنسبة لهيئة الطرق والمواصلات، فإن تبني الذكاء الاصطناعي لا يتعلق فقط بتبني أدوات جديدة — بل يتعلق بإعادة تعريف البنية التحتية الأساسية للتنقل الحديث.',
+      issueNumber: '1st Edition',
+      publishDate: '2026-04-01',
+      pdfUrl: null,
+    },
+  ];
+
+  for (const n of newslettersData) {
+    await connection.execute(`
+      INSERT INTO newsletters (titleEn, titleAr, contentEn, contentAr, issueNumber, publishDate, published)
+      VALUES (?, ?, ?, ?, ?, ?, true)
+      ON DUPLICATE KEY UPDATE titleEn = VALUES(titleEn)
+    `, [n.titleEn, n.titleAr, n.contentEn, n.contentAr, n.issueNumber, n.publishDate]);
+  }
+  console.log(`✓ ${newslettersData.length} newsletter(s) seeded`);
+
   await connection.end();
   console.log('\n✅ Database seeded successfully!');
   console.log('   You can now start the app with: pnpm dev');

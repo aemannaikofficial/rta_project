@@ -2,7 +2,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { LOGO_URL } from "@/data/newsletter";
 import LanguageToggle from "@/components/LanguageToggle";
 import { Link, useLocation } from "wouter";
-import { Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const NAV_ITEMS = [
@@ -73,9 +73,6 @@ export default function SiteHeader() {
             })}
           </div>
           <div className="flex items-center gap-2">
-            <button className="text-white/80 hover:text-white p-2 hover:bg-white/10 rounded transition-colors">
-              <Search className="w-4 h-4" />
-            </button>
             <button
               className="md:hidden text-white p-2"
               onClick={() => setMobileOpen(!mobileOpen)}

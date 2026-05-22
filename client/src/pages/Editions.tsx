@@ -8,7 +8,7 @@
  */
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { editions, LOGO_URL, UI } from "@/data/newsletter";
+import { LOGO_URL, UI } from "@/data/newsletter";
 import { Link } from "wouter";
 import SiteHeader from "@/components/SiteHeader";
 import { trpc } from "@/lib/trpc";
@@ -18,6 +18,7 @@ export default function Editions() {
   const { lang, t, isRTL } = useLanguage();
 
   // Fetch content from database
+  const { data: newslettersList } = trpc.newsletters.list.useQuery();
   const { data: videosList } = trpc.videos.list.useQuery();
   const { data: articlesList } = trpc.articles.list.useQuery();
   const { data: postersList } = trpc.posters.list.useQuery();
@@ -119,46 +120,75 @@ export default function Editions() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {editions.map((edition, i) => (
-              <motion.div
-                key={edition.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-              >
-                <Link href={`/edition/${edition.id}`}>
+            {newslettersList && newslettersList.length > 0 ? (
+              newslettersList.map((n: any, i: number) => (
+                <motion.div
+                  key={n.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                >
                   <div className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
                     <div className="bg-[#003B71] p-6 relative">
                       <div className="absolute top-0 left-0 w-full h-1 bg-[#C8102E]" />
                       <div className="flex items-start justify-between">
                         <div>
                           <span className="text-white/40 text-xs font-medium tracking-wider uppercase">
-                            {t(edition.month.en, edition.month.ar)} {edition.year}
+                            {n.publishDate
+                              ? new Date(n.publishDate).toLocaleDateString(
+                                  lang === "ar" ? "ar-AE" : "en-US",
+                                  { month: "long", year: "numeric" }
+                                )
+                              : ""}
                           </span>
                           <h3 className="text-white text-xl font-bold mt-1">
-                            {t(edition.title.en, edition.title.ar)}
+                            {lang === "ar" ? (n.titleAr || n.titleEn) : n.titleEn}
                           </h3>
                         </div>
-                        <span className="bg-[#C8102E] text-white text-xs font-bold px-3 py-1 rounded">
-                          {t(edition.subtitle.en, edition.subtitle.ar)}
-                        </span>
+                        {n.issueNumber && (
+                          <span className="bg-[#C8102E] text-white text-xs font-bold px-3 py-1 rounded">
+                            {n.issueNumber}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="p-5">
                       <p className={`text-gray-500 text-sm leading-relaxed line-clamp-3 ${isRTL ? "text-right" : ""}`}>
-                        {t(edition.foreword.en, edition.foreword.ar).slice(0, 180)}...
+                        {(lang === "ar"
+                          ? (n.contentAr || n.contentEn || "")
+                          : (n.contentEn || "")
+                        ).slice(0, 180)}...
                       </p>
                       <div className={`mt-4 flex items-center gap-2 text-[#C8102E] text-sm font-semibold group-hover:gap-3 transition-all ${isRTL ? "flex-row-reverse" : ""}`}>
-                        <span>{t("Read Edition", "اقرأ الإصدار")}</span>
-                        <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
+                        {n.pdfUrl ? (
+                          <a
+                            href={n.pdfUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span>{t("Read Edition", "اقرأ الإصدار")}</span>
+                            <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </a>
+                        ) : (
+                          <>
+                            <span>{t("Read Edition", "اقرأ الإصدار")}</span>
+                            <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
-                </Link>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))
+            ) : (
+              <p className="text-gray-400 text-sm col-span-3">{t("No editions yet.", "لا توجد إصدارات بعد.")}</p>
+            )}
           </div>
         </div>
       </section>
