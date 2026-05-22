@@ -250,7 +250,7 @@ Effective measurement is the foundation of successful smart city transformation.
       descriptionAr: 'اكتشف كيف يتقارب الحوسبة الكمية والذكاء الاصطناعي لإنشاء أنظمة نقل حضري من الجيل التالي يمكنها معالجة ملايين المتغيرات في الوقت الفعلي.',
       videoUrl: '/assets/videos/quantum-city-v2_ffc07ff5.mp4',
       thumbnailUrl: '/assets/images/quantum-city-thumb-v2_08bed01e.jpg',
-      duration: '3:45',
+      duration: '1:50',
     },
     {
       titleEn: 'Smart City Indicators: Measuring What Matters',
@@ -259,7 +259,7 @@ Effective measurement is the foundation of successful smart city transformation.
       descriptionAr: 'نظرة شاملة على كيفية قياس دبي لأداء المدينة الذكية باستخدام التحليلات المدعومة بالذكاء الاصطناعي وأجهزة استشعار إنترنت الأشياء وأنظمة تغذية راجعة المواطنين.',
       videoUrl: '/assets/videos/rta-video-2-smart-city-indicators_d6200346.mp4',
       thumbnailUrl: '/assets/images/rta-video-2-thumb_4861fa58.jpg',
-      duration: '4:12',
+      duration: '2:17',
     },
   ];
 
