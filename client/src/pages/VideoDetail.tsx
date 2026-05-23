@@ -65,7 +65,16 @@ export default function VideoDetail() {
               className="w-full aspect-video"
               poster={video.thumbnailUrl || undefined}
             >
-              <source src={video.videoUrl} type="video/mp4" />
+              <source 
+                src={
+                  video.videoUrl.includes("quantum-city") 
+                    ? "/assets/videos/Quantum-City-V2 Ffc07ff5.mp4" 
+                    : video.videoUrl.includes("rta-video-2")
+                    ? "/assets/videos/Rta-Video-2-Smart-City-Indicators D6200346.mp4"
+                    : video.videoUrl
+                } 
+                type="video/mp4" 
+              />
               {t("Your browser does not support the video tag.", "متصفحك لا يدعم تشغيل الفيديو.")}
             </video>
           </div>
