@@ -154,16 +154,16 @@ export default defineConfig({
   plugins,
   resolve: {
     alias: {
-      "@": path.resolve(path.dirname(new URL(import.meta.url).pathname), "client", "src"),
-      "@shared": path.resolve(path.dirname(new URL(import.meta.url).pathname), "shared"),
-      "@assets": path.resolve(path.dirname(new URL(import.meta.url).pathname), "attached_assets"),
+      "@": path.resolve(process.cwd(), "client", "src"),
+      "@shared": path.resolve(process.cwd(), "shared"),
+      "@assets": path.resolve(process.cwd(), "attached_assets"),
     },
   },
-  envDir: path.resolve(path.dirname(new URL(import.meta.url).pathname)),
-  root: path.resolve(path.dirname(new URL(import.meta.url).pathname), "client"),
-  publicDir: path.resolve(path.dirname(new URL(import.meta.url).pathname), "client", "public"),
+  envDir: path.resolve(process.cwd()),
+  root: path.resolve(process.cwd(), "client"),
+  publicDir: path.resolve(process.cwd(), "client", "public"),
   build: {
-    outDir: path.resolve(path.dirname(new URL(import.meta.url).pathname), "dist/public"),
+    outDir: path.resolve(process.cwd(), "dist/public"),
     emptyOutDir: true,
   },
   server: {
