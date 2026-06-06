@@ -1,0 +1,10 @@
+Logo Verification - April 28, 2026
+Homepage screenshot shows the new Dubai Government logo (with eagle/coat of arms + Arabic حكومة دبي + English GOVERNMENT OF DUBAI) correctly displayed in the header next to the RTA logo.
+The logo appears small but correctly rendered at h-10 height.
+Need to also verify inside pages (Videos, Articles, etc.) and the newsletter reader page.
+
+Videos page (/videos) - VERIFIED: New Dubai Government logo with eagle/coat of arms + Arabic text correctly displayed in header. Page is in Arabic RTL mode, logo appears correctly.
+
+Newsletter reader (/edition/apr-2026) - VERIFIED: New Dubai Government logo with eagle/coat of arms correctly displayed in the top-right header area (RTL mode). Logo visible next to RTA logo.
+
+All pages verified: Homepage (Editions.tsx via SiteHeader), Videos page (SiteHeader), Newsletter reader (Home.tsx inline header). All show the new logo correctly.

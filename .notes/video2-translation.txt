@@ -1,0 +1,90 @@
+Video 2 - Translation and Metadata
+
+=== ARABIC TEXT (Original) ===
+ماذا لو كانت مؤشرات المدن الذكية…
+تقيس الأمور بشكل غير دقيق؟
+
+ماذا لو اختزلنا المدينة الذكية في أرقام: سرعة، حركة، ازدحام…
+ونسينا الإنسان… الذي وُجدت المدينة من أجله؟
+
+لسنوات، ركّزنا على توسيع الطرق وتسريع التدفق.
+لكن الحقيقة أبسط وأعمق:
+الانتظار مع القلق… والتوتر أثناء القيادة…
+أثقل على الإنسان من الازدحام نفسه.
+
+السؤال الحقيقي:
+هل نحسّن التنقّل؟
+أم نحسّن تجربة الإنسان أثناء التنقّل؟
+
+اليوم، لم يعد الذكاء الاصطناعي مجرد مراقب.
+بل يتوقّع الحوادث قبل وقوعها،
+ويتنبأ بالأزمات،
+ويرصد اللحظات التي تصبح فيها الرحلة مُرهِقة نفسياً…
+
+نحو 1.19 مليون إنسان يفقدون حياتهم سنوياً في حوادث الطرق.
+وبحلول 2050، سيعيش 68% من البشر في المدن.
+
+ومع ذلك…
+كلما وسّعنا الطرق… زاد الازدحام.
+كأننا نُعالج النتيجة… ونُهمل السبب.
+
+وهنا السؤال الأعمق:
+هل نصمّم مدناً أفضل…
+أم خوارزميات تُعيد تشكيل سلوكنا وقراراتنا؟
+
+فالأنظمة التي تتوقّع… يمكنها أيضاً أن تُوجّه.
+وهنا تصبح الحوكمة، والخصوصية، والعدالة…
+ليست خيارات عادية بل مسؤوليات ضرورية.
+
+المستقبل ليس في التحرك بشكل أسرع فقط…
+بل في قياس ما تجاهلناه طويلاً:
+
+الإنسان… تجربته… وكرامته.
+
+=== ENGLISH TRANSLATION ===
+What if smart city indicators...
+are measuring things inaccurately?
+
+What if we reduced the smart city to mere numbers: speed, traffic flow, congestion...
+and forgot the human being... the very reason the city exists?
+
+For years, we focused on widening roads and accelerating flow.
+But the truth is simpler and deeper:
+Waiting with anxiety... and stress while driving...
+weigh heavier on people than congestion itself.
+
+The real question:
+Are we improving mobility?
+Or are we improving the human experience during mobility?
+
+Today, artificial intelligence is no longer just an observer.
+It predicts accidents before they happen,
+anticipates crises,
+and detects the moments when a journey becomes psychologically exhausting...
+
+Nearly 1.19 million people lose their lives annually in road accidents.
+By 2050, 68% of humanity will live in cities.
+
+And yet...
+The more we widen roads... the more congestion grows.
+As if we are treating the symptom... and ignoring the cause.
+
+And here lies the deeper question:
+Are we designing better cities...
+or algorithms that reshape our behavior and decisions?
+
+Systems that predict... can also direct.
+And here, governance, privacy, and fairness...
+become not mere options, but essential responsibilities.
+
+The future is not just about moving faster...
+but about measuring what we have long ignored:
+
+The human being... their experience... and their dignity.
+
+=== METADATA ===
+Title (EN): What If Smart City Indicators Are Measuring Wrong?
+Title (AR): ماذا لو كانت مؤشرات المدن الذكية تقيس الأمور بشكل غير دقيق؟
+
+Description (EN): A thought-provoking exploration of how AI in transport should prioritize the human experience over mere traffic metrics. Examining the gap between smart city numbers and human wellbeing.
+Description (AR): استكشاف مُثير للتفكير حول كيف ينبغي للذكاء الاصطناعي في النقل أن يُعطي الأولوية لتجربة الإنسان على مجرد مقاييس المرور. دراسة الفجوة بين أرقام المدن الذكية ورفاهية الإنسان.

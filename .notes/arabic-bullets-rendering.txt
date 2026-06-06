@@ -1,0 +1,23 @@
+OBSERVATION from screenshot at 09:57:37:
+
+The Arabic article page shows bullet points with ENGLISH bold headings mixed with Arabic text:
+- "From Use Cases to Full Operational Integration: توسيع الذكاء الاصطناعي ليشمل بيئات قرار متصلة على مستوى المنظومة بأكملها."
+- "من رؤية البيانات إلى ذكاء القرار الآني: التحول نحو أنظمة توصي وتُطلق إجراءات في الوقت الفعلي."
+- "من نشر التقنية إلى حوكمة الذكاء الاصطناعي المؤسسية: تعزيز الحوكمة والأمن السيبراني والمواءمة بين الوظائف."
+
+The FIRST bullet shows English text "From Use Cases to Full Operational Integration"
+The 2nd and 3rd bullets show Arabic text correctly.
+
+But from the database query earlier, the Arabic content has:
+- **من حالات الاستخدام إلى التكامل التشغيلي الكامل:** (all Arabic)
+- **من رؤية البيانات إلى ذكاء القرار الآني:** (all Arabic)
+- **من نشر التقنية إلى حوكمة الذكاء الاصطناعي المؤسسية:** (all Arabic)
+
+So the database is CORRECT. The rendering in the screenshot shows the FIRST bullet with English.
+This is very confusing. Let me re-read the database content more carefully.
+
+WAIT - looking at the screenshot more carefully, the text reads:
+"From Use Cases to Full Operational Integration: توسيع الذكاء الاصطناعي ليشمل بيئات قرار متصلة على مستوى المنظومة بأكملها."
+
+This is CLEARLY wrong. The database should have Arabic for this first bullet.
+Need to re-query and check if the fix script accidentally left English in the first bullet.
