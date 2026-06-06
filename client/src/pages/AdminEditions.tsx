@@ -28,8 +28,8 @@ export default function AdminEditions() {
           const dateSource = firstNl?.publishDate
             ? new Date(firstNl.publishDate)
             : firstNl?.createdAt
-            ? new Date(firstNl.createdAt)
-            : new Date();
+              ? new Date(firstNl.createdAt)
+              : new Date();
           const monthEn = dateSource.toLocaleString("en", { month: "long" });
           const year = dateSource.getFullYear();
           const previewLink = ed.editionNumber === 1 ? "/edition/apr-2026" : `/edition/${ed.editionNumber}`;
@@ -79,7 +79,7 @@ export default function AdminEditions() {
                     {ed.newsletters.map((n, i) => (
                       <div key={n.id} className="flex items-center gap-2 text-sm">
                         <span className="w-6 h-6 rounded bg-[#003B71]/10 flex items-center justify-center text-[10px] font-bold text-[#003B71] flex-shrink-0">
-                          {String(n.sectionNumber ?? i + 1).padStart(2, "0")}
+                          {String(n.issueNumber ?? i + 1).padStart(2, "0")}
                         </span>
                         <span className="text-gray-600 truncate">{n.titleEn}</span>
                       </div>

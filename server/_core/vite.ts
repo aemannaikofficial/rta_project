@@ -26,7 +26,7 @@ export async function setupVite(app: Express, server: Server) {
 
     try {
       const clientTemplate = path.resolve(
-        path.dirname(new URL(import.meta.url).pathname),
+        process.cwd(),
         "../..",
         "client",
         "index.html"

@@ -20,7 +20,7 @@ import { ENV } from "./_core/env";
  */
 function loadLogoBase64(): string {
   const candidates = [
-    path.resolve(import.meta.dirname, "assets", "rta_logo.png"),
+    path.resolve(process.cwd(), "assets", "rta_logo.png"),
     path.resolve(process.cwd(), "server", "assets", "rta_logo.png"),
   ];
   for (const logoPath of candidates) {
@@ -264,7 +264,7 @@ export async function generatePdf(options: PdfOptions): Promise<Buffer> {
     await page.evaluate(() => {
       return Promise.all(
         Array.from(document.images).map((img) =>
-          img.decode().catch(() => {})
+          img.decode().catch(() => { })
         )
       );
     });
