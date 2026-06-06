@@ -9,7 +9,7 @@ import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 // Writes browser logs directly to files, trimmed when exceeding size limit
 // =============================================================================
 
-const PROJECT_ROOT = import.meta.dirname;
+const PROJECT_ROOT = process.cwd();
 const LOG_DIR = path.join(PROJECT_ROOT, ".dev-logs");
 const MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024; // 1MB per log file
 const TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6); // Trim to 60% to avoid constant re-trimming
@@ -154,16 +154,16 @@ export default defineConfig({
   plugins,
   resolve: {
     alias: {
-      "@": path.resolve(import.meta.dirname, "client", "src"),
-      "@shared": path.resolve(import.meta.dirname, "shared"),
-      "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+      "@": path.resolve(path.dirname(new URL(import.meta.url).pathname), "client", "src"),
+      "@shared": path.resolve(path.dirname(new URL(import.meta.url).pathname), "shared"),
+      "@assets": path.resolve(path.dirname(new URL(import.meta.url).pathname), "attached_assets"),
     },
   },
-  envDir: path.resolve(import.meta.dirname),
-  root: path.resolve(import.meta.dirname, "client"),
-  publicDir: path.resolve(import.meta.dirname, "client", "public"),
+  envDir: path.resolve(path.dirname(new URL(import.meta.url).pathname)),
+  root: path.resolve(path.dirname(new URL(import.meta.url).pathname), "client"),
+  publicDir: path.resolve(path.dirname(new URL(import.meta.url).pathname), "client", "public"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    outDir: path.resolve(path.dirname(new URL(import.meta.url).pathname), "dist/public"),
     emptyOutDir: true,
   },
   server: {
