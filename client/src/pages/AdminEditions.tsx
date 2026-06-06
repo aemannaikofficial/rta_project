@@ -79,9 +79,9 @@ export default function AdminEditions() {
                     {ed.newsletters.map((n, i) => (
                       <div key={n.id} className="flex items-center gap-2 text-sm">
                         <span className="w-6 h-6 rounded bg-[#003B71]/10 flex items-center justify-center text-[10px] font-bold text-[#003B71] flex-shrink-0">
-                          {String(
-                            n.issueNumber || ((ed.editionNumber - 1) * 10 + n.sectionNumber)
-                          ).padStart(2, "0")}
+                          <span className="w-6 h-6 rounded bg-[#003B71]/10 flex items-center justify-center text-[10px] font-bold text-[#003B71] flex-shrink-0">
+                            E{ed.editionNumber}-S{n.sectionNumber}
+                          </span>
                         </span>
                         <span className="text-gray-600 truncate">{n.titleEn}</span>
                       </div>
