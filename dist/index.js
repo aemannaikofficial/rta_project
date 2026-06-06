@@ -245,6 +245,9 @@ function getSessionCookieOptions(req) {
   };
 }
 
+// server/_core/sdk.ts
+import { webcrypto } from "node:crypto";
+
 // shared/_core/errors.ts
 var HttpError = class extends Error {
   constructor(statusCode, message) {
@@ -261,6 +264,9 @@ init_env();
 import axios from "axios";
 import { parse as parseCookieHeader } from "cookie";
 import { SignJWT, jwtVerify } from "jose";
+if (!globalThis.crypto) {
+  globalThis.crypto = webcrypto;
+}
 var isNonEmptyString = (value) => typeof value === "string" && value.length > 0;
 var EXCHANGE_TOKEN_PATH = `/webdev.v1.WebDevAuthPublicService/ExchangeToken`;
 var GET_USER_INFO_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfo`;
