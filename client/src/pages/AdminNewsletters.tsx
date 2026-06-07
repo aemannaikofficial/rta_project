@@ -1,7 +1,7 @@
 import { trpc } from "@/lib/trpc";
-import { Trash2, Edit2, Plus } from "lucide-react";
+import { Trash2, Edit2, Plus, Upload } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useRef, type ChangeEvent } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,21 @@ export default function AdminNewsletters() {
   const { data: newsletters, isLoading } = trpc.newsletters.adminList.useQuery();
   const [isOpen, setIsOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [selectedImageName, setSelectedImageName] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const uploadImage = trpc.uploads.image.useMutation({
+    onSuccess: (result) => {
+      setValue("imageUrl", result.url);
+      setUploadError(null);
+      toast.success("Image uploaded");
+    },
+    onError: (error: any) => {
+      setUploadError(error.message);
+      toast.error(error.message);
+    },
+  });
 
   const form = useForm<NewsletterFormValues>({
     resolver: zodResolver(newsletterSchema) as any,
@@ -39,6 +54,7 @@ export default function AdminNewsletters() {
       issueNumber: "", publishDate: "", imageUrl: "", published: false,
     },
   });
+  const { setValue } = form;
 
   const createNewsletter = trpc.newsletters.create.useMutation({
     onSuccess: () => {
@@ -57,6 +73,40 @@ export default function AdminNewsletters() {
     },
     onError: (e: any) => toast.error(e.message),
   });
+
+  const readFileAsDataUrl = (file: File) => new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        resolve(reader.result);
+      } else {
+        reject(new Error("Could not read file"));
+      }
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+
+  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) {
+      setUploadError("Only JPG, PNG, WEBP, and GIF files are allowed.");
+      return;
+    }
+
+    try {
+      setUploadError(null);
+      const dataUrl = await readFileAsDataUrl(file);
+      const base64 = dataUrl.split(",")[1] ?? "";
+      setSelectedImageName(file.name);
+      await uploadImage.mutateAsync({ fileName: file.name, contentType: file.type || "application/octet-stream", base64 });
+    } catch (error: any) {
+      setUploadError(error?.message ?? "Failed to upload image");
+    }
+  };
 
   const deleteNewsletter = trpc.newsletters.delete.useMutation({
     onSuccess: () => { utils.newsletters.invalidate(); toast.success("Newsletter deleted"); },
@@ -87,6 +137,7 @@ export default function AdminNewsletters() {
       imageUrl: newsletter.imageUrl || "",
       published: newsletter.published,
     });
+    setSelectedImageName(null);
     setEditingId(newsletter.id);
     setIsOpen(true);
   }
@@ -94,6 +145,7 @@ export default function AdminNewsletters() {
   function handleClose() {
     setIsOpen(false);
     setEditingId(null);
+    setSelectedImageName(null);
     form.reset({
       titleEn: "", titleAr: "", contentEn: "", contentAr: "",
       issueNumber: "", publishDate: "", imageUrl: "", published: false,
@@ -143,17 +195,38 @@ export default function AdminNewsletters() {
                 </div>
                 <FormField control={form.control} name="imageUrl" render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Image URL (Optional)</FormLabel>
+                    <FormLabel>Upload Image (Optional)</FormLabel>
                     <FormControl>
                       <div className="space-y-4">
-                        <Input {...field} placeholder="https://example.com/image.jpg" />
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept=".jpg,.jpeg,.png,.webp,.gif"
+                          className="hidden"
+                          onChange={handleImageUpload}
+                        />
+                        <Button
+                          type="button"
+                          className="bg-[#003B71] text-white hover:bg-[#002a54]"
+                          onClick={() => fileInputRef.current?.click()}
+                          disabled={uploadImage.isPending}
+                        >
+                          <Upload className="h-4 w-4" />
+                          Upload Image
+                        </Button>
+                        {selectedImageName ? (
+                          <p className="text-sm text-gray-600">{selectedImageName}</p>
+                        ) : null}
+                        {uploadError ? (
+                          <p className="text-sm text-red-600">{uploadError}</p>
+                        ) : null}
                         {field.value ? (
                           <div className="w-full max-w-sm rounded-lg border-2 border-[#C8102E] overflow-hidden p-1">
                             <img src={field.value} alt="Preview" className="w-full h-auto object-cover rounded" />
                           </div>
                         ) : (
                           <div className="w-full max-w-sm h-32 rounded-lg border-2 border-dashed border-[#C8102E] flex items-center justify-center bg-gray-50 text-gray-400 text-sm">
-                            Image Preview
+                            {uploadImage.isPending ? "Uploading image..." : "No image selected"}
                           </div>
                         )}
                       </div>

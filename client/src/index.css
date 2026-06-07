@@ -135,6 +135,13 @@ html {
   scroll-behavior: smooth;
 }
 
+.rta-result-box strong, .rta-result-box b, .rta-result-box p, .rta-result-box span, .rta-result-box * { color: #4B5563 !important; font-weight: normal !important; }
+.rta-result-box > span:first-child { color: #C8102E !important; font-weight: 700 !important; font-size: 0.75rem !important; }
+
+.rta-result-box {
+  border-inline-start-width: 4px;
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    NEWSLETTER CONTENT — Visual parity: Text Editor ↔ Result Box
    Single source of truth: Result Box on /edition/apr-2026
@@ -775,3 +782,5 @@ html {
 .print-only {
   display: none;
 }
+
+

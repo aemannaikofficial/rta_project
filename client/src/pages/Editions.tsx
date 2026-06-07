@@ -148,11 +148,15 @@ export default function Editions() {
               dbEditions.map((ed, i) => {
                 // Edition 1 links to the static rich reader; newer editions link to /newsletters
                 const href = ed.editionNumber === 1 ? "/edition/apr-2026" : `/edition/${ed.editionNumber}`;
-                const firstNewsletter = ed.newsletters[0];
+                const firstNewsletter = [...ed.newsletters].sort((a: any, b: any) => (a.sectionNumber ?? 0) - (b.sectionNumber ?? 0))[0];
                 const titleEn = firstNewsletter?.titleEn || "AI Newsletter";
                 const titleAr = firstNewsletter?.titleAr || "نشرة الذكاء الاصطناعي";
-                const forewordEn = firstNewsletter?.contentEn || "";
-                const forewordAr = firstNewsletter?.contentAr || "";
+                const rawEn = firstNewsletter?.contentEn || "";
+                const rawAr = firstNewsletter?.contentAr || "";
+                const stripHtml = s => s.replace(/<[^>]*>/g, '').trim();
+                const parsePreview = s => { try { const j = JSON.parse(s); return j.body?.[0]?.en || ""; } catch { return stripHtml(s); } };
+                const forewordEn = parsePreview(rawEn);
+                const forewordAr = parsePreview(rawAr);
                 const subtitleEn = getOrdinalEn(ed.editionNumber);
                 const subtitleAr = getOrdinalAr(ed.editionNumber);
                 // Derive month/year from publishDate or createdAt of first newsletter
@@ -474,3 +478,4 @@ export default function Editions() {
     </div>
   );
 }
+

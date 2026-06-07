@@ -70,20 +70,34 @@ const RtaBulletText = Mark.create({
 const RtaResultBox = Node.create({
   name: 'rtaResultBox',
   group: 'block',
-  content: 'inline*',
+  content: 'block*',
+  addAttributes() {
+    return {
+      title: { default: '' },
+    }
+  },
   parseHTML() {
     return [
       {
         tag: 'div',
-        getAttrs: (node) => (node as HTMLElement).style.borderInlineStartWidth === '4px' ? {} : false,
+        getAttrs: (node) => {
+          const el = node as HTMLElement
+          const isResultBox =
+            el.classList.contains('rta-result-box') ||
+            el.style.borderInlineStartWidth === '4px'
+          if (!isResultBox) return false
+          const span = el.querySelector('span')
+          return { title: span?.textContent?.trim() ?? '' }
+        },
+        contentElement: (node) => node.querySelector('div') || node,
       }
     ]
   },
   renderHTML({ HTMLAttributes }) {
     return [
-      'div', mergeAttributes(HTMLAttributes, { class: 'mt-6 border-[#C8102E] bg-[#C8102E]/5 rounded px-5 py-4', style: 'border-inline-start-width: 4px;' }),
-      ['span', { class: 'text-[#C8102E] font-bold text-xs uppercase tracking-wider block mb-2' }, 'RESULT'],
-      ['p', { class: 'text-[#003B71]/80 mt-2 text-sm leading-relaxed' }, 0],
+      'div', mergeAttributes(HTMLAttributes, { class: 'rta-result-box mt-6 border-[#C8102E] bg-[#C8102E]/5 rounded px-5 py-4' }),
+      ['span', { class: 'text-[#C8102E] font-bold text-xs tracking-wider block mb-2' }, HTMLAttributes.title || 'Result'],
+      ['div', { class: 'mt-2 text-sm leading-relaxed text-gray-600' }, 0],
     ]
   },
 })
@@ -91,7 +105,7 @@ const RtaResultBox = Node.create({
 export function RichTextEditor({ value, onChange, className, dir = "ltr" }: RichTextEditorProps) {
   const editor: any = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({ underline: false }),
       Underline,
       RtaBulletPoint as any,
       RtaBulletLabel as any,
@@ -124,6 +138,34 @@ export function RichTextEditor({ value, onChange, className, dir = "ltr" }: Rich
       editor.commands.setContent(value ?? '', false as any);
     }
   }, [value, editor]);
+
+  const insertResultBox = () => {
+    if (!editor) return;
+
+    try {
+      const { state } = editor;
+      const { from, to } = state.selection;
+      const { schema } = editor.state;
+      const selectedText = state.doc.textBetween(from, to, ' ').trim();
+      
+      // Use selected text as heading, or default based on language direction
+      const title = selectedText || "";
+      
+      // Create empty paragraph for content area
+      const emptyParagraph = schema.nodes.paragraph.create();
+      const resultBox = schema.nodes.rtaResultBox.create(
+        { title },
+        [emptyParagraph]
+      );
+
+      editor.chain().focus().command(({ tr }: { tr: any }) => {
+        tr.replaceRangeWith(from, to, resultBox);
+        return true;
+      }).run();
+    } catch (e) {
+      console.error('insertResultBox error', e)
+    }
+  }
 
   if (!editor) {
     return null
@@ -188,7 +230,17 @@ export function RichTextEditor({ value, onChange, className, dir = "ltr" }: Rich
         }}>
           <ListPlus className="h-4 w-4" />
         </Button>
-        <Toggle size="sm" pressed={editor.isActive('rtaResultBox')} onPressedChange={() => editor.chain().focus().toggleNode('rtaResultBox', 'paragraph').run()}>
+        <Toggle
+          size="sm"
+          pressed={editor.isActive('rtaResultBox')}
+          onPressedChange={() => {
+            if (editor.isActive('rtaResultBox')) {
+              editor.chain().focus().toggleNode('rtaResultBox', 'paragraph').run()
+            } else {
+              insertResultBox()
+            }
+          }}
+        >
           <MessageSquare className="h-4 w-4" />
         </Toggle>
       </div>
@@ -196,3 +248,5 @@ export function RichTextEditor({ value, onChange, className, dir = "ltr" }: Rich
     </div>
   )
 }
+
+

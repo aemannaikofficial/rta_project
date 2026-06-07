@@ -350,7 +350,7 @@ function SectionBlock({ section, index }: { section: Section; index: number }) {
             )}
 
             {section.callout && (
-              <div className="mt-6 border-[#C8102E] bg-[#C8102E]/5 rounded px-5 py-4" style={{ borderInlineStartWidth: '4px' }}>
+              <div className="rta-result-box mt-6 border-[#C8102E] bg-[#C8102E]/5 rounded px-5 py-4 [&_strong]:text-gray-600 [&_strong]:font-normal [&_b]:text-gray-600 [&_p]:text-gray-600 [&_*]:text-gray-600" style={{ borderInlineStartWidth: '4px' }}>
                 <span className="text-[#C8102E] font-bold text-xs uppercase tracking-wider">
                   {section.callout.type === "insight" ? useBi(UI.insight) : section.callout.type === "result" ? useBi(UI.result) : useBi(UI.conclusion)}
                 </span>
@@ -491,7 +491,7 @@ export default function Home() {
         en: "Thank you for exploring this edition with us.", 
         ar: "شكراً لاستكشافكم هذا الإصدار معنا." 
       },
-      sections: dbEdition.newsletters.map((n: any, i: number) => ({
+      sections: [...dbEdition.newsletters].sort((a: any, b: any) => (a.sectionNumber ?? 0) - (b.sectionNumber ?? 0)).map((n: any, i: number) => ({
         num: n.sectionNumber ?? i + 1,
         title: { en: n.titleEn, ar: n.titleAr },
         shortTitle: { en: n.titleEn, ar: n.titleAr },
@@ -576,3 +576,10 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+
+
+

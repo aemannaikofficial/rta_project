@@ -7,6 +7,8 @@ import { users, videos, articles, posters, comments, ratings, newsletters } from
 import { eq, and, desc, sql } from "drizzle-orm";
 import { z } from "zod";
 import crypto from "crypto";
+import path from "path";
+import { storagePut } from "./storage";
 
 export const appRouter = router({
   system: systemRouter,
@@ -95,6 +97,20 @@ export const appRouter = router({
       await db.delete(videos).where(eq(videos.id, input.id));
       return { success: true };
     }),
+  }),
+
+  uploads: router({
+    image: adminProcedure
+      .input(z.object({ fileName: z.string().min(1), base64: z.string().min(1), contentType: z.string().min(1) }))
+      .mutation(async ({ input }) => {
+        const fileName = input.fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
+        const ext = path.extname(fileName) || ".png";
+        const baseName = path.basename(fileName, ext);
+        const safeKey = `newsletters/${baseName}_${crypto.randomBytes(8).toString("hex")}${ext}`;
+        const buffer = Buffer.from(input.base64, "base64");
+        const { url } = await storagePut(safeKey, buffer, input.contentType);
+        return { url };
+      }),
   }),
 
   // ─── Articles ───
